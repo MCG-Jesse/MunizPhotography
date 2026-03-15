@@ -1,0 +1,12 @@
+[
+  {
+    "file": "sample-1.jpg",
+    "caption": "Golden hour",
+    "category": "landscape"
+  },
+  {
+    "file": "sample-2.jpg",
+    "caption": "Street life",
+    "category": "street"
+  }
+]
