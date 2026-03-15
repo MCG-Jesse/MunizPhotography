@@ -10,10 +10,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-
+ 
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
+ 
   :root {
     --bg: #111009;
     --bg-card: #1a1810;
@@ -24,9 +24,9 @@
     --border: rgba(201, 168, 76, 0.15);
     --ease: cubic-bezier(0.4, 0, 0.2, 1);
   }
-
+ 
   html { scroll-behavior: smooth; }
-
+ 
   body {
     font-family: 'Jost', sans-serif;
     font-weight: 300;
@@ -35,7 +35,7 @@
     min-height: 100vh;
     overflow-x: hidden;
   }
-
+ 
   /* ── Header ── */
   header {
     display: flex;
@@ -45,12 +45,12 @@
     border-bottom: 1px solid var(--border);
     animation: fadeDown 0.7s var(--ease) both;
   }
-
+ 
   @keyframes fadeDown {
     from { opacity: 0; transform: translateY(-12px); }
     to   { opacity: 1; transform: translateY(0); }
   }
-
+ 
   .site-name {
     font-family: 'Cormorant Garamond', serif;
     font-size: 2.8rem;
@@ -59,7 +59,7 @@
     line-height: 1;
     color: var(--text);
   }
-
+ 
   .site-name em {
     display: block;
     font-style: normal;
@@ -71,13 +71,13 @@
     color: var(--accent);
     margin-top: 0.45rem;
   }
-
+ 
   nav {
     display: flex;
     align-items: center;
     gap: 2.5rem;
   }
-
+ 
   nav a {
     font-size: 0.72rem;
     letter-spacing: 0.2em;
@@ -86,10 +86,10 @@
     text-decoration: none;
     transition: color 0.2s;
   }
-
+ 
   nav a:hover, nav a.active { color: var(--text); }
   nav a.active { color: var(--accent); }
-
+ 
   /* ── Category bar ── */
   .cat-bar {
     padding: 1.25rem 5rem;
@@ -101,9 +101,9 @@
     overflow-x: auto;
     white-space: nowrap;
   }
-
+ 
   .cat-bar::-webkit-scrollbar { display: none; }
-
+ 
   .cat-btn {
     padding: 0.38rem 1.1rem;
     background: transparent;
@@ -117,14 +117,14 @@
     transition: all 0.2s;
     flex-shrink: 0;
   }
-
+ 
   .cat-btn:hover { color: var(--text); }
   .cat-btn.active {
     border-color: var(--border);
     color: var(--text);
     background: var(--bg-card);
   }
-
+ 
   .photo-count {
     margin-left: auto;
     font-size: 0.72rem;
@@ -132,18 +132,18 @@
     color: var(--text-muted);
     flex-shrink: 0;
   }
-
+ 
   /* ── Grid ── */
   main {
     padding: 3rem 5rem 5rem;
     animation: fadeUp 0.8s 0.2s var(--ease) both;
   }
-
+ 
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(16px); }
     to   { opacity: 1; transform: translateY(0); }
   }
-
+ 
   /* Empty state */
   .empty {
     display: flex;
@@ -154,7 +154,7 @@
     text-align: center;
     gap: 1.5rem;
   }
-
+ 
   .empty-icon {
     width: 56px;
     height: 56px;
@@ -164,21 +164,21 @@
     stroke-width: 1;
     stroke-linecap: round;
   }
-
+ 
   .empty h2 {
     font-family: 'Cormorant Garamond', serif;
     font-size: 1.9rem;
     font-weight: 300;
     opacity: 0.4;
   }
-
+ 
   .empty p {
     font-size: 0.82rem;
     color: var(--text-muted);
     max-width: 340px;
     line-height: 1.8;
   }
-
+ 
   .empty code {
     background: var(--bg-card);
     border: 1px solid var(--border);
@@ -187,13 +187,13 @@
     font-size: 0.8rem;
     color: var(--accent);
   }
-
+ 
   /* Masonry grid */
   .grid {
     columns: 3;
     column-gap: 10px;
   }
-
+ 
   .photo-item {
     break-inside: avoid;
     margin-bottom: 10px;
@@ -203,7 +203,7 @@
     background: var(--bg-card);
     display: block;
   }
-
+ 
   .photo-item img {
     width: 100%;
     height: auto;
@@ -211,12 +211,12 @@
     transition: transform 0.55s var(--ease), filter 0.55s ease;
     filter: brightness(0.9) saturate(0.88);
   }
-
+ 
   .photo-item:hover img {
     transform: scale(1.04);
     filter: brightness(1) saturate(1);
   }
-
+ 
   .photo-overlay {
     position: absolute;
     inset: 0;
@@ -227,9 +227,9 @@
     align-items: flex-end;
     padding: 0.9rem 1rem;
   }
-
+ 
   .photo-item:hover .photo-overlay { opacity: 1; }
-
+ 
   .overlay-caption {
     font-size: 0.72rem;
     letter-spacing: 0.1em;
@@ -239,7 +239,7 @@
     white-space: nowrap;
     max-width: 100%;
   }
-
+ 
   /* ── Lightbox ── */
   .lb {
     position: fixed;
@@ -253,9 +253,9 @@
     pointer-events: none;
     transition: opacity 0.3s ease;
   }
-
+ 
   .lb.open { opacity: 1; pointer-events: all; }
-
+ 
   .lb-inner {
     position: relative;
     display: flex;
@@ -264,7 +264,7 @@
     gap: 1.25rem;
     max-width: 88vw;
   }
-
+ 
   .lb img {
     max-width: 88vw;
     max-height: 82vh;
@@ -272,26 +272,26 @@
     display: block;
     transition: opacity 0.25s ease;
   }
-
+ 
   .lb-meta {
     display: flex;
     align-items: center;
     gap: 2rem;
   }
-
+ 
   .lb-caption {
     font-family: 'Cormorant Garamond', serif;
     font-style: italic;
     font-size: 1.05rem;
     color: rgba(232, 223, 200, 0.6);
   }
-
+ 
   .lb-counter {
     font-size: 0.68rem;
     letter-spacing: 0.2em;
     color: var(--text-muted);
   }
-
+ 
   .lb-close {
     position: fixed;
     top: 1.75rem;
@@ -309,9 +309,9 @@
     transition: all 0.2s;
     z-index: 1001;
   }
-
+ 
   .lb-close:hover { color: var(--text); border-color: var(--accent-dim); }
-
+ 
   .lb-arrow {
     position: fixed;
     top: 50%;
@@ -330,11 +330,11 @@
     z-index: 1001;
     user-select: none;
   }
-
+ 
   .lb-arrow:hover { color: var(--text); border-color: var(--accent-dim); }
   .lb-arrow.prev { left: 2rem; }
   .lb-arrow.next { right: 2rem; }
-
+ 
   /* ── Footer ── */
   footer {
     padding: 2rem 5rem;
@@ -343,10 +343,10 @@
     justify-content: space-between;
     align-items: center;
   }
-
+ 
   footer p { font-size: 0.7rem; letter-spacing: 0.1em; color: var(--text-muted); }
   footer .gold { color: var(--accent); }
-
+ 
   /* ── Loading state ── */
   .loading-bar {
     position: fixed;
@@ -357,14 +357,14 @@
     transition: width 0.3s ease;
     z-index: 9999;
   }
-
+ 
   /* ── Responsive ── */
   @media (max-width: 960px) {
     header, .cat-bar, main, footer { padding-left: 2.5rem; padding-right: 2.5rem; }
     .grid { columns: 2; }
     .site-name { font-size: 2.2rem; }
   }
-
+ 
   @media (max-width: 580px) {
     header { flex-direction: column; align-items: flex-start; gap: 1.5rem; padding-top: 2rem; }
     .grid { columns: 1; }
@@ -374,9 +374,9 @@
 </style>
 </head>
 <body>
-
+ 
 <div class="loading-bar" id="loading-bar" style="width:0%"></div>
-
+ 
 <header>
   <div class="site-name">
     Jesse
@@ -384,13 +384,13 @@
   </div>
   <nav id="nav-cats"></nav>
 </header>
-
+ 
 <div class="cat-bar">
   <button class="cat-btn active" data-cat="all" onclick="filterBy('all')">All</button>
   <span id="extra-cats"></span>
   <span class="photo-count" id="photo-count"></span>
 </div>
-
+ 
 <main>
   <div class="empty" id="empty" style="display:none">
     <svg class="empty-icon" viewBox="0 0 64 64">
@@ -404,7 +404,7 @@
   </div>
   <div class="grid" id="grid"></div>
 </main>
-
+ 
 <div class="lb" id="lb">
   <div class="lb-inner">
     <img id="lb-img" src="" alt="">
@@ -417,22 +417,22 @@
   <button class="lb-arrow prev" onclick="shiftLb(-1)">&#x2190;</button>
   <button class="lb-arrow next" onclick="shiftLb(1)">&#x2192;</button>
 </div>
-
+ 
 <footer>
   <p>&#169; <span id="yr"></span> <span class="gold">Jesse</span></p>
   <p>Click any photo to view &mdash; arrow keys to navigate</p>
 </footer>
-
+ 
 <script>
   document.getElementById('yr').textContent = new Date().getFullYear();
-
+ 
   let allPhotos = [];
   let filtered = [];
   let current = 0;
   let categories = new Set();
-
+ 
   const bar = document.getElementById('loading-bar');
-
+ 
   async function init() {
     bar.style.width = '40%';
     try {
@@ -443,12 +443,12 @@
     }
     bar.style.width = '100%';
     setTimeout(() => bar.style.display = 'none', 400);
-
+ 
     allPhotos.forEach(p => { if (p.category) categories.add(p.category); });
     buildCategoryButtons();
     filterBy('all');
   }
-
+ 
   function buildCategoryButtons() {
     const container = document.getElementById('extra-cats');
     container.innerHTML = '';
@@ -461,7 +461,7 @@
       container.appendChild(btn);
     });
   }
-
+ 
   function filterBy(cat) {
     document.querySelectorAll('.cat-btn').forEach(b => {
       b.classList.toggle('active', b.dataset.cat === cat);
@@ -469,69 +469,69 @@
     filtered = cat === 'all' ? [...allPhotos] : allPhotos.filter(p => p.category === cat);
     renderGrid();
   }
-
+ 
   function renderGrid() {
     const grid = document.getElementById('grid');
     const empty = document.getElementById('empty');
     const count = document.getElementById('photo-count');
-
+ 
     count.textContent = filtered.length + (filtered.length === 1 ? ' photo' : ' photos');
-
+ 
     if (filtered.length === 0) {
       grid.innerHTML = '';
       empty.style.display = 'flex';
       return;
     }
-
+ 
     empty.style.display = 'none';
     grid.innerHTML = filtered.map((p, i) => `
       <div class="photo-item" onclick="openLb(${i})">
-        <img src="images/${p.file}" alt="${p.caption || ''}" loading="lazy">
+        <img src="${p.file}" alt="${p.caption || ''}" loading="lazy">
         <div class="photo-overlay">
           ${p.caption ? `<span class="overlay-caption">${p.caption}</span>` : ''}
         </div>
       </div>
     `).join('');
   }
-
+ 
   function openLb(i) {
     current = i;
     updateLb();
     document.getElementById('lb').classList.add('open');
     document.body.style.overflow = 'hidden';
   }
-
+ 
   function closeLb() {
     document.getElementById('lb').classList.remove('open');
     document.body.style.overflow = '';
   }
-
+ 
   function updateLb() {
     const p = filtered[current];
     const img = document.getElementById('lb-img');
     img.style.opacity = 0;
-    img.src = `images/${p.file}`;
+    img.src = `${p.file}`;
     img.onload = () => { img.style.opacity = 1; };
     document.getElementById('lb-caption').textContent = p.caption || '';
     document.getElementById('lb-counter').textContent = `${current + 1} / ${filtered.length}`;
   }
-
+ 
   function shiftLb(dir) {
     current = (current + dir + filtered.length) % filtered.length;
     updateLb();
   }
-
+ 
   document.addEventListener('keydown', e => {
     if (!document.getElementById('lb').classList.contains('open')) return;
     if (e.key === 'Escape') closeLb();
     if (e.key === 'ArrowLeft') shiftLb(-1);
     if (e.key === 'ArrowRight') shiftLb(1);
   });
-
+ 
   document.getElementById('lb').addEventListener('click', e => {
     if (e.target === document.getElementById('lb')) closeLb();
   });
-
+ 
   init();
 </script>
 </body>
