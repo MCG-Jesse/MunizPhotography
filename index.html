@@ -3,439 +3,352 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jesse — Photography</title>
-<meta name="description" content="Photography by Jesse">
+<title>Jesse Muniz — Photography</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
  
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
  
   :root {
-    --bg: #111009;
-    --bg-card: #1a1810;
-    --text: #e8dfc8;
-    --text-muted: #7a7160;
+    --bg: #0d0c0a;
+    --text: #e0d8c4;
+    --text-muted: #6a6255;
     --accent: #c9a84c;
-    --accent-dim: #6b5620;
-    --border: rgba(201, 168, 76, 0.15);
+    --accent-dim: rgba(201,168,76,0.2);
+    --thumb-h: 90px;
+    --nav-h: 60px;
     --ease: cubic-bezier(0.4, 0, 0.2, 1);
   }
  
-  html { scroll-behavior: smooth; }
- 
-  body {
-    font-family: 'Jost', sans-serif;
-    font-weight: 300;
+  html, body {
+    width: 100%; height: 100%;
+    overflow: hidden;
     background: var(--bg);
     color: var(--text);
-    min-height: 100vh;
-  }
- 
-  header {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    padding: 3.5rem 5rem 2.5rem;
-    border-bottom: 1px solid var(--border);
-    animation: fadeDown 0.7s var(--ease) both;
-  }
- 
-  @keyframes fadeDown {
-    from { opacity: 0; transform: translateY(-12px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
- 
-  .site-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 2.8rem;
-    font-weight: 300;
-    letter-spacing: 0.02em;
-    line-height: 1;
-  }
- 
-  .site-name em {
-    display: block;
-    font-style: normal;
-    font-size: 0.78rem;
     font-family: 'Jost', sans-serif;
-    font-weight: 400;
+    font-weight: 300;
+    user-select: none;
+  }
+ 
+  /* ── Full-screen photo stage ── */
+  #stage {
+    position: fixed;
+    inset: 0;
+    bottom: calc(var(--thumb-h) + 1px);
+    background: var(--bg);
+    overflow: hidden;
+  }
+ 
+  .slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.7s var(--ease);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+ 
+  .slide.active { opacity: 1; }
+  .slide.prev   { opacity: 0; }
+ 
+  .slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    display: block;
+    filter: brightness(0.95);
+  }
+ 
+  /* ── Top navigation bar ── */
+  #topbar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: var(--nav-h);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2.5rem;
+    background: linear-gradient(to bottom, rgba(13,12,10,0.85) 0%, transparent 100%);
+    transition: opacity 0.4s ease;
+  }
+ 
+  #topbar.hidden { opacity: 0; pointer-events: none; }
+ 
+  .site-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    color: var(--text);
+    text-decoration: none;
+  }
+ 
+  .site-title span {
+    font-size: 0.6rem;
+    font-family: 'Jost', sans-serif;
     letter-spacing: 0.3em;
     text-transform: uppercase;
     color: var(--accent);
-    margin-top: 0.45rem;
+    margin-left: 0.75rem;
+    vertical-align: middle;
   }
  
-  nav { display: flex; gap: 2.5rem; }
- 
-  nav a {
-    font-size: 0.72rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
- 
-  nav a:hover { color: var(--text); }
- 
-  .cat-bar {
-    padding: 1.25rem 5rem;
+  .top-nav {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    border-bottom: 1px solid var(--border);
-    overflow-x: auto;
-    white-space: nowrap;
+    gap: 2rem;
   }
  
-  .cat-bar::-webkit-scrollbar { display: none; }
- 
-  .cat-btn {
-    padding: 0.38rem 1.1rem;
+  .top-nav button {
     background: transparent;
-    border: 1px solid transparent;
+    border: none;
     color: var(--text-muted);
     font-family: 'Jost', sans-serif;
-    font-size: 0.72rem;
-    letter-spacing: 0.18em;
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
     cursor: pointer;
-    transition: all 0.2s;
-    flex-shrink: 0;
+    transition: color 0.2s;
+    padding: 0.25rem 0;
+    border-bottom: 1px solid transparent;
   }
  
-  .cat-btn:hover { color: var(--text); }
-  .cat-btn.active {
-    border-color: var(--border);
+  .top-nav button:hover,
+  .top-nav button.active {
     color: var(--text);
-    background: var(--bg-card);
+    border-bottom-color: var(--accent);
   }
  
-  .photo-count {
-    margin-left: auto;
-    font-size: 0.72rem;
-    letter-spacing: 0.1em;
+  /* Portfolio dropdown */
+  .portfolio-menu {
+    position: relative;
+  }
+ 
+  .dropdown {
+    position: absolute;
+    top: calc(100% + 1rem);
+    right: 0;
+    background: rgba(13,12,10,0.96);
+    border: 1px solid rgba(201,168,76,0.15);
+    padding: 0.5rem 0;
+    min-width: 180px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+ 
+  .portfolio-menu:hover .dropdown,
+  .portfolio-menu.open .dropdown {
+    opacity: 1;
+    pointer-events: all;
+  }
+ 
+  .dropdown button {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 0.55rem 1.25rem;
+    border: none;
+    border-bottom: none !important;
+  }
+ 
+  /* ── Caption overlay ── */
+  #caption-bar {
+    position: fixed;
+    bottom: calc(var(--thumb-h) + 16px);
+    left: 0; right: 0;
+    z-index: 50;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 0 2.5rem 1rem;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+ 
+  #caption-bar.hidden { opacity: 0; }
+ 
+  .caption-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    font-weight: 300;
+    color: rgba(224,216,196,0.7);
+    max-width: 50%;
+  }
+ 
+  .counter-text {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
     color: var(--text-muted);
+  }
+ 
+  /* ── Arrow controls ── */
+  .arrow {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 60;
+    width: 50px;
+    height: 50px;
+    background: transparent;
+    border: none;
+    color: rgba(224,216,196,0.35);
+    cursor: pointer;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+    margin-bottom: calc(var(--thumb-h) / 2);
+  }
+ 
+  .arrow:hover { color: rgba(224,216,196,0.85); }
+  .arrow.left  { left: 1rem; }
+  .arrow.right { right: 1rem; }
+ 
+  /* ── Thumbnail strip ── */
+  #thumb-strip {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    height: var(--thumb-h);
+    z-index: 100;
+    background: rgba(13,12,10,0.92);
+    border-top: 1px solid rgba(201,168,76,0.1);
+    display: flex;
+    align-items: center;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    gap: 3px;
+    padding: 6px 6px;
+  }
+ 
+  #thumb-strip::-webkit-scrollbar { height: 3px; }
+  #thumb-strip::-webkit-scrollbar-track { background: transparent; }
+  #thumb-strip::-webkit-scrollbar-thumb { background: var(--accent-dim); }
+ 
+  .thumb {
     flex-shrink: 0;
+    height: calc(var(--thumb-h) - 12px);
+    aspect-ratio: 3/2;
+    overflow: hidden;
+    cursor: pointer;
+    opacity: 0.45;
+    transition: opacity 0.3s ease, outline 0.2s ease;
+    position: relative;
   }
  
-  main {
-    padding: 0 5rem 5rem;
-    animation: fadeUp 0.8s 0.15s var(--ease) both;
+  .thumb img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: saturate(0.7);
+    transition: filter 0.3s ease;
   }
  
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to   { opacity: 1; transform: translateY(0); }
+  .thumb:hover { opacity: 0.75; }
+  .thumb:hover img { filter: saturate(1); }
+ 
+  .thumb.active {
+    opacity: 1;
+    outline: 1.5px solid var(--accent);
+    outline-offset: -1.5px;
   }
  
-  .empty {
+  .thumb.active img { filter: saturate(1); }
+ 
+  /* ── Empty state ── */
+  #empty {
+    position: fixed;
+    inset: 0;
+    bottom: var(--thumb-h);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 55vh;
-    text-align: center;
     gap: 1.5rem;
+    text-align: center;
   }
  
-  .empty-icon {
-    width: 56px; height: 56px;
+  #empty svg {
+    width: 48px; height: 48px;
     stroke: var(--accent); fill: none;
-    opacity: 0.3; stroke-width: 1; stroke-linecap: round;
+    opacity: 0.25; stroke-width: 1; stroke-linecap: round;
   }
  
-  .empty h2 {
+  #empty h2 {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 1.9rem; font-weight: 300; opacity: 0.4;
+    font-size: 1.8rem; font-weight: 300;
+    opacity: 0.35;
   }
  
-  .empty p { font-size: 0.82rem; color: var(--text-muted); max-width: 340px; line-height: 1.8; }
+  #empty p { font-size: 0.8rem; color: var(--text-muted); line-height: 1.8; }
  
-  /* Hero */
-  .hero {
-    position: relative;
-    width: 100%;
-    margin-top: 3rem;
-    overflow: hidden;
-    cursor: pointer;
-    background: var(--bg-card);
-  }
+  /* ── Hide UI on mouse idle ── */
+  body.ui-hidden #topbar,
+  body.ui-hidden #caption-bar { opacity: 0; pointer-events: none; }
  
-  .hero img {
-    width: 100%;
-    max-height: 72vh;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.7s var(--ease), filter 0.5s ease;
-    filter: brightness(0.88) saturate(0.9);
-  }
+  body.ui-hidden .arrow { color: rgba(224,216,196,0.1); }
  
-  .hero:hover img {
-    transform: scale(1.02);
-    filter: brightness(0.95) saturate(1);
-  }
- 
-  .hero-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(8,7,5,0.75) 0%, transparent 50%);
-    display: flex;
-    align-items: flex-end;
-    padding: 2.5rem 3rem;
-  }
- 
-  .hero-meta { display: flex; flex-direction: column; gap: 0.4rem; }
- 
-  .hero-label {
-    font-size: 0.68rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--accent);
-  }
- 
-  .hero-caption {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 2rem;
-    font-weight: 300;
-    font-style: italic;
-    color: var(--text);
-    line-height: 1.2;
-  }
- 
-  .hero-expand {
-    position: absolute;
-    top: 1.25rem; right: 1.25rem;
-    width: 36px; height: 36px;
-    background: rgba(8,7,5,0.5);
-    border: 1px solid var(--border);
-    color: var(--text-muted);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 0.9rem;
-    opacity: 0;
-    transition: opacity 0.2s;
-  }
- 
-  .hero:hover .hero-expand { opacity: 1; }
- 
-  /* Thumbnails */
-  .thumb-section { margin-top: 10px; }
- 
-  .thumb-section-label {
-    font-size: 0.68rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: 10px;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--border);
-  }
- 
-  .thumb-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-  }
- 
-  .thumb-item {
-    position: relative;
-    overflow: hidden;
-    cursor: pointer;
-    background: var(--bg-card);
-    aspect-ratio: 4/3;
-  }
- 
-  .thumb-item img {
-    width: 100%; height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.5s var(--ease), filter 0.4s ease;
-    filter: brightness(0.85) saturate(0.85);
-  }
- 
-  .thumb-item:hover img {
-    transform: scale(1.06);
-    filter: brightness(1) saturate(1);
-  }
- 
-  .thumb-overlay {
-    position: absolute; inset: 0;
-    background: linear-gradient(to top, rgba(8,7,5,0.65) 0%, transparent 60%);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    display: flex; align-items: flex-end;
-    padding: 0.75rem;
-  }
- 
-  .thumb-item:hover .thumb-overlay { opacity: 1; }
- 
-  .thumb-caption {
-    font-size: 0.68rem;
-    letter-spacing: 0.08em;
-    color: rgba(232,223,200,0.85);
-    overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%;
-  }
- 
-  .thumb-item.is-hero::after {
-    content: 'Featured';
-    position: absolute;
-    top: 8px; left: 8px;
-    font-size: 0.6rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--accent);
-    background: rgba(8,7,5,0.7);
-    border: 1px solid var(--accent-dim);
-    padding: 3px 8px;
-  }
- 
-  /* Lightbox */
-  .lb {
-    position: fixed; inset: 0; z-index: 999;
-    background: rgba(8,7,5,0.97);
-    display: flex; align-items: center; justify-content: center;
-    opacity: 0; pointer-events: none;
-    transition: opacity 0.3s ease;
-  }
- 
-  .lb.open { opacity: 1; pointer-events: all; }
- 
-  .lb-inner {
-    display: flex; flex-direction: column;
-    align-items: center; gap: 1.25rem;
-    max-width: 88vw;
-  }
- 
-  .lb img {
-    max-width: 88vw; max-height: 82vh;
-    object-fit: contain; display: block;
-    transition: opacity 0.25s ease;
-  }
- 
-  .lb-meta { display: flex; align-items: center; gap: 2rem; }
- 
-  .lb-caption {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic; font-size: 1.05rem;
-    color: rgba(232,223,200,0.6);
-  }
- 
-  .lb-counter { font-size: 0.68rem; letter-spacing: 0.2em; color: var(--text-muted); }
- 
-  .lb-close {
-    position: fixed; top: 1.75rem; right: 2.25rem;
-    width: 38px; height: 38px;
-    background: transparent; border: 1px solid var(--border);
-    color: var(--text-muted); cursor: pointer; font-size: 1rem;
-    display: flex; align-items: center; justify-content: center;
-    transition: all 0.2s; z-index: 1001;
-  }
- 
-  .lb-close:hover { color: var(--text); border-color: var(--accent-dim); }
- 
-  .lb-arrow {
-    position: fixed; top: 50%; transform: translateY(-50%);
-    width: 44px; height: 44px;
-    background: transparent; border: 1px solid var(--border);
-    color: var(--text-muted); cursor: pointer; font-size: 1rem;
-    display: flex; align-items: center; justify-content: center;
-    transition: all 0.2s; z-index: 1001; user-select: none;
-  }
- 
-  .lb-arrow:hover { color: var(--text); border-color: var(--accent-dim); }
-  .lb-arrow.prev { left: 2rem; }
-  .lb-arrow.next { right: 2rem; }
- 
-  footer {
-    padding: 2rem 5rem;
-    border-top: 1px solid var(--border);
-    display: flex; justify-content: space-between; align-items: center;
-  }
- 
-  footer p { font-size: 0.7rem; letter-spacing: 0.1em; color: var(--text-muted); }
-  footer .gold { color: var(--accent); }
- 
-  @media (max-width: 960px) {
-    header, .cat-bar, main, footer { padding-left: 2rem; padding-right: 2rem; }
-    .thumb-grid { grid-template-columns: repeat(3, 1fr); }
-    .site-name { font-size: 2.2rem; }
-  }
- 
+  /* ── Responsive ── */
   @media (max-width: 640px) {
-    header { flex-direction: column; align-items: flex-start; gap: 1.5rem; padding-top: 2rem; }
-    .thumb-grid { grid-template-columns: repeat(2, 1fr); }
-    .hero-caption { font-size: 1.4rem; }
-    .lb-arrow.prev { left: 0.75rem; }
-    .lb-arrow.next { right: 0.75rem; }
+    :root { --thumb-h: 70px; }
+    .caption-text { font-size: 0.9rem; max-width: 70%; }
+    .top-nav { gap: 1rem; }
   }
 </style>
 </head>
 <body>
  
-<header>
-  <div class="site-name">Jesse<em>Photography</em></div>
-  <nav></nav>
-</header>
- 
-<div class="cat-bar">
-  <button class="cat-btn active" data-cat="all" onclick="filterBy('all')">All</button>
-  <span id="extra-cats"></span>
-  <span class="photo-count" id="photo-count"></span>
+<!-- Top nav -->
+<div id="topbar">
+  <a class="site-title" href="#">Jesse <span>Photography</span></a>
+  <div class="top-nav">
+    <div class="portfolio-menu">
+      <button id="portfolio-btn">Portfolios ▾</button>
+      <div class="dropdown" id="portfolio-dropdown"></div>
+    </div>
+    <button onclick="toggleInfo()">Info</button>
+  </div>
 </div>
  
-<main>
-  <div class="empty" id="empty" style="display:none">
-    <svg class="empty-icon" viewBox="0 0 64 64">
-      <rect x="4" y="12" width="56" height="40" rx="3"/>
-      <circle cx="32" cy="32" r="10"/>
-      <circle cx="32" cy="32" r="4"/>
-      <circle cx="50" cy="20" r="2"/>
-    </svg>
-    <h2>No photos yet</h2>
-    <p>Add your images and list them in photos.json.</p>
-  </div>
+<!-- Main stage -->
+<div id="stage"></div>
  
-  <div class="hero" id="hero" style="display:none" onclick="openLb(0)">
-    <img id="hero-img" src="" alt="">
-    <div class="hero-overlay">
-      <div class="hero-meta">
-        <span class="hero-label">Featured</span>
-        <span class="hero-caption" id="hero-caption"></span>
-      </div>
-    </div>
-    <div class="hero-expand">&#x2922;</div>
-  </div>
- 
-  <div class="thumb-section" id="thumb-section" style="display:none">
-    <p class="thumb-section-label">All photos</p>
-    <div class="thumb-grid" id="thumb-grid"></div>
-  </div>
-</main>
- 
-<div class="lb" id="lb">
-  <div class="lb-inner">
-    <img id="lb-img" src="" alt="">
-    <div class="lb-meta">
-      <span class="lb-caption" id="lb-caption"></span>
-      <span class="lb-counter" id="lb-counter"></span>
-    </div>
-  </div>
-  <button class="lb-close" onclick="closeLb()">&#x2715;</button>
-  <button class="lb-arrow prev" onclick="shiftLb(-1)">&#x2190;</button>
-  <button class="lb-arrow next" onclick="shiftLb(1)">&#x2192;</button>
+<!-- Empty state -->
+<div id="empty" style="display:none">
+  <svg viewBox="0 0 64 64">
+    <rect x="4" y="12" width="56" height="40" rx="3"/>
+    <circle cx="32" cy="32" r="10"/>
+    <circle cx="32" cy="32" r="4"/>
+    <circle cx="50" cy="20" r="2"/>
+  </svg>
+  <h2>No photos yet</h2>
+  <p>Add images and list them in photos.json</p>
 </div>
  
-<footer>
-  <p>&#169; <span id="yr"></span> <span class="gold">Jesse</span></p>
-  <p>Click any photo to view &mdash; arrow keys to navigate</p>
-</footer>
+<!-- Caption + counter -->
+<div id="caption-bar">
+  <span class="caption-text" id="caption"></span>
+  <span class="counter-text" id="counter"></span>
+</div>
+ 
+<!-- Arrows -->
+<button class="arrow left" onclick="shift(-1)">&#8592;</button>
+<button class="arrow right" onclick="shift(1)">&#8594;</button>
+ 
+<!-- Thumbnail strip -->
+<div id="thumb-strip"></div>
  
 <script>
-  document.getElementById('yr').textContent = new Date().getFullYear();
- 
   let allPhotos = [], filtered = [], current = 0;
+  let idleTimer = null;
  
   async function init() {
     try {
@@ -443,102 +356,137 @@
       allPhotos = await res.json();
     } catch(e) { allPhotos = []; }
  
-    const cats = new Set();
-    allPhotos.forEach(p => { if (p.category) cats.add(p.category); });
+    // Build portfolio dropdown from categories
+    const cats = [...new Set(allPhotos.map(p => p.category).filter(Boolean))];
+    const dd = document.getElementById('portfolio-dropdown');
+    const btn = document.getElementById('portfolio-btn');
  
-    const container = document.getElementById('extra-cats');
-    cats.forEach(cat => {
-      const btn = document.createElement('button');
-      btn.className = 'cat-btn';
-      btn.dataset.cat = cat;
-      btn.textContent = cat;
-      btn.onclick = () => filterBy(cat);
-      container.appendChild(btn);
-    });
+    if (cats.length) {
+      const allBtn = document.createElement('button');
+      allBtn.textContent = 'All';
+      allBtn.onclick = () => { filterBy('all'); dd.style.opacity = 0; dd.style.pointerEvents = 'none'; };
+      dd.appendChild(allBtn);
+ 
+      cats.forEach(cat => {
+        const b = document.createElement('button');
+        b.textContent = cat;
+        b.onclick = () => { filterBy(cat); dd.style.opacity = 0; dd.style.pointerEvents = 'none'; };
+        dd.appendChild(b);
+      });
+ 
+      btn.onclick = () => {
+        const open = dd.style.opacity === '1';
+        dd.style.opacity = open ? '0' : '1';
+        dd.style.pointerEvents = open ? 'none' : 'all';
+      };
+    } else {
+      btn.style.display = 'none';
+    }
  
     filterBy('all');
+    setupIdleHide();
   }
  
   function filterBy(cat) {
-    document.querySelectorAll('.cat-btn').forEach(b =>
-      b.classList.toggle('active', b.dataset.cat === cat));
     filtered = cat === 'all' ? [...allPhotos] : allPhotos.filter(p => p.category === cat);
-    render();
+    current = 0;
+    buildStage();
+    buildThumbs();
+    updateCaption();
   }
  
-  function render() {
-    const count = document.getElementById('photo-count');
-    const hero = document.getElementById('hero');
-    const thumbSection = document.getElementById('thumb-section');
+  function buildStage() {
+    const stage = document.getElementById('stage');
     const empty = document.getElementById('empty');
  
-    count.textContent = filtered.length + (filtered.length === 1 ? ' photo' : ' photos');
- 
     if (filtered.length === 0) {
-      hero.style.display = 'none';
-      thumbSection.style.display = 'none';
+      stage.innerHTML = '';
       empty.style.display = 'flex';
       return;
     }
  
     empty.style.display = 'none';
- 
-    const first = filtered[0];
-    hero.style.display = 'block';
-    document.getElementById('hero-img').src = first.file;
-    document.getElementById('hero-caption').textContent = first.caption || '';
- 
-    thumbSection.style.display = filtered.length > 1 ? 'block' : 'none';
- 
-    document.getElementById('thumb-grid').innerHTML = filtered.map((p, i) => `
-      <div class="thumb-item ${i === 0 ? 'is-hero' : ''}" onclick="openLb(${i})">
-        <img src="${p.file}" alt="${p.caption || ''}" loading="lazy">
-        <div class="thumb-overlay">
-          ${p.caption ? `<span class="thumb-caption">${p.caption}</span>` : ''}
-        </div>
+    stage.innerHTML = filtered.map((p, i) => `
+      <div class="slide ${i === 0 ? 'active' : ''}" data-i="${i}">
+        <img src="${p.file}" alt="${p.caption || ''}" loading="${i < 3 ? 'eager' : 'lazy'}">
       </div>
     `).join('');
   }
  
-  function openLb(i) {
-    current = i;
-    updateLb();
-    document.getElementById('lb').classList.add('open');
-    document.body.style.overflow = 'hidden';
+  function buildThumbs() {
+    const strip = document.getElementById('thumb-strip');
+    strip.innerHTML = filtered.map((p, i) => `
+      <div class="thumb ${i === 0 ? 'active' : ''}" data-i="${i}" onclick="goTo(${i})">
+        <img src="${p.file}" alt="" loading="lazy">
+      </div>
+    `).join('');
   }
  
-  function closeLb() {
-    document.getElementById('lb').classList.remove('open');
-    document.body.style.overflow = '';
+  function goTo(i) {
+    if (i === current) return;
+    const slides = document.querySelectorAll('.slide');
+    const thumbs = document.querySelectorAll('.thumb');
+ 
+    slides[current]?.classList.remove('active');
+    thumbs[current]?.classList.remove('active');
+ 
+    current = (i + filtered.length) % filtered.length;
+ 
+    slides[current]?.classList.add('active');
+    thumbs[current]?.classList.add('active');
+ 
+    // Scroll thumb into view
+    thumbs[current]?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+ 
+    updateCaption();
   }
  
-  function updateLb() {
+  function shift(dir) {
+    goTo(current + dir);
+  }
+ 
+  function updateCaption() {
     const p = filtered[current];
-    const img = document.getElementById('lb-img');
-    img.style.opacity = 0;
-    img.src = p.file;
-    img.onload = () => img.style.opacity = 1;
-    document.getElementById('lb-caption').textContent = p.caption || '';
-    document.getElementById('lb-counter').textContent = `${current + 1} / ${filtered.length}`;
+    document.getElementById('caption').textContent = p?.caption || '';
+    document.getElementById('counter').textContent =
+      filtered.length ? `${current + 1} / ${filtered.length}` : '';
   }
  
-  function shiftLb(dir) {
-    current = (current + dir + filtered.length) % filtered.length;
-    updateLb();
-  }
- 
+  // Keyboard navigation
   document.addEventListener('keydown', e => {
-    if (!document.getElementById('lb').classList.contains('open')) return;
-    if (e.key === 'Escape') closeLb();
-    if (e.key === 'ArrowLeft') shiftLb(-1);
-    if (e.key === 'ArrowRight') shiftLb(1);
+    if (e.key === 'ArrowLeft')  shift(-1);
+    if (e.key === 'ArrowRight') shift(1);
   });
  
-  document.getElementById('lb').addEventListener('click', e => {
-    if (e.target === document.getElementById('lb')) closeLb();
+  // Touch swipe
+  let touchX = null;
+  document.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; });
+  document.addEventListener('touchend', e => {
+    if (touchX === null) return;
+    const dx = e.changedTouches[0].clientX - touchX;
+    if (Math.abs(dx) > 40) shift(dx < 0 ? 1 : -1);
+    touchX = null;
   });
+ 
+  // Hide UI when mouse idle
+  function setupIdleHide() {
+    const resetIdle = () => {
+      document.body.classList.remove('ui-hidden');
+      clearTimeout(idleTimer);
+      idleTimer = setTimeout(() => document.body.classList.add('ui-hidden'), 3500);
+    };
+    document.addEventListener('mousemove', resetIdle);
+    document.addEventListener('touchstart', resetIdle);
+    resetIdle();
+  }
+ 
+  function toggleInfo() {
+    // Placeholder for info panel
+    alert('Coming soon — add your bio and contact info here.');
+  }
  
   init();
 </script>
 </body>
 </html>
+ 
